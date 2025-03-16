@@ -1,0 +1,100 @@
+.tweet-card-container{
+    padding: 10px;
+    padding-right: 15px;
+    display: flex;
+    gap: 5px;
+    border-style: solid;
+    border-width: 0px 1px 1px 1px;
+    border-color: rgba(128, 128, 128, 0.336);
+    animation: fadeIn 1s;
+}
+
+.tweet-card-container .user-img {
+    flex: 0.1;
+    img{
+        width: 40px;
+    height: 40px ;
+    border-radius: 50%;
+    }
+    
+}
+
+.tweet-card-container .card-details{
+    flex: 0.9;
+
+    .card-sub1{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        div{
+            display: flex;
+            align-items: center;
+            gap: 2px;
+
+            .icon{
+                color: #3dc3fb;
+            }
+
+            span:nth-child(1){
+                font-weight: bold;
+            }
+            span:nth-child(4), span:nth-child(3){
+                margin-left: 5px;
+                color: rgba(0, 0, 0, 0.679);
+            }
+
+        }
+
+        
+    }
+    .post-para{
+        font-family: 'Arial', sans-serif;
+        font-size: 16px;
+        line-height: 1.4;
+        color: #333;
+        /* text-align: justify; */
+        /* margin-bottom: 16px; */
+        padding: 5px 0;
+    }
+
+    .post-img{
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .actions{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 10px;
+        margin: 10px 0;
+
+        .action-sub{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 5px;
+            border-radius: 10px;
+
+            &:hover{
+                background-color: rgba(249, 175, 250, 0.267);
+            }
+            .icon{
+                font-size: 24px;
+            }
+        }
+    }
+}
+
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

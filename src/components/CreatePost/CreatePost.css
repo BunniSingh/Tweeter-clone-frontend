@@ -1,0 +1,125 @@
+.create-post-container {
+    border-width: 0px 1px 0px 1px;
+    border-color: rgba(128, 128, 128, 0.495);
+    border-style: solid;
+}
+
+.create-post-container .create-post-sub1 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 50px;
+}
+
+.create-post-sub1 .one,
+.two {
+    /* padding: 10px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+
+    .icon {
+        font-size: 20px;
+    }
+}
+
+.create-post-sub1 p{
+    padding: 10px 0;
+}
+
+.active{
+    border-bottom: 3px solid #3dc3fb;
+}
+
+.create-post-sub1 .one {
+    flex: 1;
+    
+}
+
+.create-post-sub1 .two {
+    flex: 1;
+}
+
+
+.create-post-sub2 {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    border-width: 1px 0px 1px 0px;
+    border-color: rgba(128, 128, 128, 0.495);
+    border-style: solid;
+    padding: 10px;
+
+    .sub2-img {
+        flex: 0.1;
+
+    }
+
+    .sub2-items {
+        flex: 1;
+
+        input {
+            padding: 12px 5px;
+            width: 100%;
+            outline: none;
+            border: none;
+            font-size: 19px;
+        }
+
+        .sub2-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .icons {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                .icon{
+                    font-size: 25px;
+                    color: #3cb0df;
+                    transition: 0.3s;
+                    cursor: pointer;
+
+                    &:hover{
+                        color: #017fb5;
+                    }
+
+                    &:active {
+                        color: darkblue;
+                        transform: scale(0.95);
+                    }
+                }
+            }
+
+            button {
+                padding: 6px 21px;
+                border: none;
+                border-radius: 20px;
+                color: #fff;
+                background-color: #3dc3fb;
+                cursor: pointer;
+                transition: 0.3s;
+
+                &:hover {
+                    background-color: #b8b8b8;
+                }
+                &:active {
+                    background-color: rgb(59, 176, 231); 
+                    transform: scale(0.95);
+                }
+            }
+        }
+
+    }
+
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}

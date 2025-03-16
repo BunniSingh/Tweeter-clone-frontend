@@ -1,0 +1,75 @@
+.left-sidebar-container{
+    width: 20%;
+}
+
+.left-sidebar-container .left-sidebar{
+    /* border-right: 1px solid gray; */
+}
+
+.left-sidebar-container .sidebar-top{
+
+    .twitter-logo{
+        font-size: 35px;
+    }
+}
+
+
+.left-sidebar-container .sidebar-middle{
+    
+    .sub-body{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 15px 0;
+        cursor: pointer;
+        margin-left: 8px;
+    }
+    span{
+        font-weight: 500;
+    }
+
+    .icon{
+        font-size: 24px;
+    }
+
+    button{
+        border: none;
+        padding: 10px;
+        width: 80%;
+        font-weight: bold;
+        border-radius: 20px;
+        color: #fff;
+        background-color: #3dc3fb;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover{
+            background-color: #b8b8b8;
+        }
+    }
+}
+
+
+
+.left-sidebar-container .sidebar-bottom{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 30px;
+
+
+    img{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+
+    div p:nth-child(1){
+        font-size: 14px;
+        font-weight: bold;
+    }
+    div p:nth-child(2){
+        color: rgb(164, 164, 166);
+        font-size: 14px;
+    }
+}
