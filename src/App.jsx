@@ -1,15 +1,19 @@
-
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-
 import './App.css';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import axios from "axios";
+import {Toaster} from "react-hot-toast";
+import {Provider} from 'react-redux';
 import Home from './components/Home/Home'
 import Feed from './components/Feed/Feed';
 import UserProfile from './components/UserProfile/UserProfile';
 import LoginPage from './components/LoginPage/LoginPage';
+import store from './redux/store';
+
+axios.defaults.baseURL = "http://localhost:8080/api/v1";
 
 const router = createBrowserRouter([
   {
-    element: "",
+    path: "",
     element: <Home/>,
     children: [
       {
@@ -17,7 +21,7 @@ const router = createBrowserRouter([
         element:<Feed/>
       },
       {
-        path: '/profile',
+        path: '/profile/:id',
         element:<UserProfile/>
       },
 
@@ -33,7 +37,11 @@ function App() {
 
   return (
     <div className='App-container'>
-      <RouterProvider router={router}/>
+      <Provider store={store}>
+        <RouterProvider router={router}/>
+        <Toaster/>
+      </Provider>
+      
     </div>
   )
 }

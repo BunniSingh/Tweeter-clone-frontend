@@ -1,17 +1,28 @@
-import React from 'react'
+import React from 'react';
 import "./UserProfile.css";
-import { Link } from 'react-router-dom';
-
+import { Link, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { IoArrowBack, IoCalendarOutline, IoLocationOutline } from "react-icons/io5";
-import { CiLocationOn } from "react-icons/ci";
+import useGetUserProfile from '../../hooks/useGetUserProfile';
+import Loader from '../Loader';
+
+
+
 
 const UserProfile = () => {
+    const { profile } = useSelector(store => store.user);
+    const {id} = useParams();
+    const { loading, error } = useGetUserProfile(id);
+
+    if (loading) return <Loader/>;
+    if (error) return <p>Error: {error.message}</p>;
+
     return (
         <div className='user-profile-container'>
             <div className="top">
                 <Link to={'/'}><IoArrowBack className='icon' /></Link>
                 <div>
-                    <p className='name'>BANTI KUMAR SINGH</p>
+                    <p className='name'>{profile?.firstName} {profile?.lastName}</p>
                     <p>0 posts</p>
                 </div>
             </div>
@@ -29,24 +40,16 @@ const UserProfile = () => {
                         <button>Edit profile</button>
                     </div>
                     <div className="mid-sub2">
-                        <p className='name'>BANTI KUMAR SINGH</p>
-                        <p>@BANTIKUMAR80310</p>
+                        <p className='name'>{profile?.firstName} {profile?.lastName}</p>
+                        <p>@{profile?.email?.split('@')[0]}</p>
                     </div>
-                    <p className='bio'>Former Cricketer -
-                        @bcci
-                            ,
-                        @mipaltan
-                        ,
-                        @Chargershome
-                        | An Artist, as spin bowling is an art | Broadcaster
-                        @jiocinema
-                        | Employed with
-                        @BPCLIMITED</p>
-
+                    <p className='bio'>
+                        Former Cricketer - @bcci, @mipaltan, @Chargershome | An Artist, as spin bowling is an art | Broadcaster @jiocinema| Employed with @BPCLIMITED
+                    </p>
                     <div className="mid-sub3">
                         <div>
                             <IoLocationOutline className='icon'/>
-                            <span>New Delhi, india</span>
+                            <span>New Delhi, India</span>
                         </div>
                         <div>
                             <IoCalendarOutline className='icon'/>
@@ -56,17 +59,17 @@ const UserProfile = () => {
                     <div className="mid-sub4">
                         <div>
                             <span>16</span>
-                            <span>Folloing</span>
+                            <span>Following</span>
                         </div>
                         <div>
                             <span>1k</span>
-                            <span>Following</span>
+                            <span>Followers</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default UserProfile
+export default UserProfile;
