@@ -74,16 +74,22 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            cursor: pointer;
             transition: 0.3s;
             padding: 5px;
             border-radius: 10px;
-
-            &:hover{
-                background-color: rgba(249, 175, 250, 0.267);
-            }
+            
             .icon{
-                font-size: 24px;
+                font-size: 34px;
+                padding: 4px;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s;
+                &:hover{
+                    background-color: rgba(127, 213, 101, 0.267);
+                }
+                &:active{
+                    transform: scale(.95);
+                }
             }
         }
     }

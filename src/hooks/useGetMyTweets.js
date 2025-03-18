@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAllTweets } from "../redux/slices/tweetSlice";
 
 const useGetMyTweets = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const {refresh} = useSelector(store => store.tweet);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,7 +23,7 @@ const useGetMyTweets = () => {
         };
 
         fetchData();
-    }, [dispatch]);
+    }, [dispatch, refresh]);
 
     return { loading, error };
 };

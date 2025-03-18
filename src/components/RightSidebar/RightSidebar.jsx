@@ -1,18 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './RightSidebar.css'
 
 import { CiSearch } from "react-icons/ci";
 import { MdMoreHoriz, MdVerified } from "react-icons/md";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useGetOtherUsers from '../../hooks/useGetOtherUsers';
 import { Link } from 'react-router-dom';
 import Loader from '../Loader';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { updateFollowandUnfollow } from '../../redux/slices/userSlice';
+import { refresh } from '../../redux/slices/tweetSlice';
 
-const RightSidebar = ({ otherUsers }) => {
-  const {loading, error} = useGetOtherUsers()
+
+const RightSidebar = () => {
+
+  const dispatch = useDispatch();
+
+  const {loading, error} = useGetOtherUsers();
+  const {following} = useSelector(store => store.user.user);
+  const {otherUsers} = useSelector(store => store.user);
 
   if(loading) return <Loader/>;
   if(error) return <p>Error: {error.message}</p>;
+
+  const handleFollowClick = async (id) => {
+    try {
+      const res = await axios.put(`/user/follow/${id}`, {}, {withCredentials: true});
+      if(res.data.success){
+        toast.success(res.data.message);
+        dispatch(updateFollowandUnfollow(id));
+        dispatch(refresh());
+      }
+      // console.log(res.data);
+    } catch (error) {
+      
+    }
+  }
 
   return (
     <div className='right-sidebar-container'>
@@ -35,6 +59,7 @@ const RightSidebar = ({ otherUsers }) => {
             if (name.length > 8) {
               name = user.firstName + "..."
             }
+            let isFollow = following.includes(user?._id) ? "Following" : "Follow";
             return (
               <div key={user._id} className="people-profile">
                 <div className='people-profile-sub'>
@@ -43,14 +68,13 @@ const RightSidebar = ({ otherUsers }) => {
                     <Link to={`/profile/${user?._id}`}>
                       <div className='people-info'>
                         <span>{name}</span>
-                        {/* <span>{`${user.firstName} ${user.lastName}`}</span> */}
                         <MdVerified className='icon' />
                       </div>
                     </Link>
                     <p>@{user.email.split('@')[0]}</p>
                   </div>
                 </div>
-                <button>Follow</button>
+                <button onClick={() => handleFollowClick(user?._id)}>{isFollow}</button>
               </div>
             )
           })

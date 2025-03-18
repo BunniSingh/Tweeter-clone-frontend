@@ -78,7 +78,6 @@
                 }
                 &:active {
                     background-color: rgb(59, 176, 231); 
-                    transform: scale(0.95);
                 }
             }
         }

@@ -91,8 +91,8 @@ const LoginPage = () => {
                             </div>
                         <input ref={userNameRef} type="text" placeholder='Username' required/>
                        </>}
-                        <input ref={emailRef} type="email" placeholder='Email' required/>
-                        <input ref={passwordRef} type="password" placeholder='Password' required/>
+                        <input ref={emailRef} type="email" placeholder='Email' autoComplete='username' required/>
+                        <input ref={passwordRef} type="password" placeholder='Password' autoComplete={toogle ? "current-password" : "new-password"} required/>
                         <button type="submit">{toogle ? "Register" : "Login"}</button>
                     </form>
                     <p className='switch-form'>

@@ -1,35 +1,44 @@
 import './App.css';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import axios from "axios";
-import {Toaster} from "react-hot-toast";
-import {Provider} from 'react-redux';
+import { Toaster } from "react-hot-toast";
+import { Provider } from 'react-redux';
 import Home from './components/Home/Home'
 import Feed from './components/Feed/Feed';
 import UserProfile from './components/UserProfile/UserProfile';
 import LoginPage from './components/LoginPage/LoginPage';
 import store from './redux/store';
+import { PersistGate } from "redux-persist/integration/react";
+import persistStore from 'redux-persist/es/persistStore';
+
+let persistor = persistStore(store)
 
 axios.defaults.baseURL = "http://localhost:8080/api/v1";
 
 const router = createBrowserRouter([
   {
     path: "",
-    element: <Home/>,
+    element: <Home />,
     children: [
       {
         path: '/',
-        element:<Feed/>
+        element: <Feed />,
+        children: [
+          {
+
+          }
+        ]
       },
       {
         path: '/profile/:id',
-        element:<UserProfile/>
+        element: <UserProfile />
       },
 
     ]
   },
   {
     path: '/login',
-    element: <LoginPage/>
+    element: <LoginPage />
   }
 ])
 
@@ -38,10 +47,12 @@ function App() {
   return (
     <div className='App-container'>
       <Provider store={store}>
-        <RouterProvider router={router}/>
-        <Toaster/>
+        <PersistGate loading={null} persistor={persistor}>
+          <RouterProvider router={router} />
+          <Toaster />
+        </PersistGate>
       </Provider>
-      
+
     </div>
   )
 }

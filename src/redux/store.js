@@ -1,12 +1,42 @@
-import { configureStore } from '@reduxjs/toolkit';
-import userSlice from './slices/userSlice'
-import tweetSlice from './slices/tweetSlice'
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import userSlice from "./slices/userSlice";
+import tweetSlice from "./slices/tweetSlice";
+
+//imports Redux-Persist
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+};
+
+
+const rootReducer = combineReducers({
+    user: userSlice,
+    tweet: tweetSlice
+})
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-    reducer: {
-        user: userSlice,
-        tweet: tweetSlice,
-    }
-})
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 
-export default store
+export default store;

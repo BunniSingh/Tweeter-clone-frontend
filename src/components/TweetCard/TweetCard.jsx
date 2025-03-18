@@ -1,16 +1,93 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './TweetCard.css'
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { refresh } from '../../redux/slices/tweetSlice';
 
-import { RiMoreFill, RiVerifiedBadgeFill } from "react-icons/ri";
+//sweetalert and toast impotrs
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+const MySwal = withReactContent(Swal);
+import toast from 'react-hot-toast';
 
+//day.js imports
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+
+
+//icons imports
+import { RiChatDeleteLine, RiMoreFill, RiVerifiedBadgeFill } from "react-icons/ri";
 import { FaRegComment, FaRegBookmark, FaRegHeart } from "react-icons/fa";
 
 const TweetCard = (tweet) => {
-    let {firstName, lastName , email, userName} = tweet.userId;
+    const timeAgo = dayjs(tweet.updatedAt).fromNow();
+    console.log(timeAgo)
+
+    const {user} = useSelector(store => store.user);
+    const dispatch = useDispatch();
+
+    let {_id, firstName, lastName , email, userName} = tweet.userId;
     // email = email.split('@')[0];
     let name = `${firstName} ${lastName}`;
+
+    const handleLikeClick = async (id) => {
+        try {
+            const res = await axios.put(`/tweet/like/${id}`, {}, {withCredentials: true});
+            console.log(res)
+            if(res.data.success){
+                toast.success(`You ${res.data.message.split(" ")[1]} the ${firstName}'s post`);
+                dispatch(refresh());
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message);
+            console.log(error);
+        }
+    }
+
+    const handleBookmarkClick = async (id) => {
+        try {
+            const res = await axios.put(`/user/bookmark/${id}`, {}, {withCredentials: true});
+            console.log(res)
+            if(res.data.success){
+                toast.success(`You ${res.data.message.split(" ")[1]} in bookmark ${firstName}'s post`);
+                // dispatch(refresh());
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message);
+            console.log(error);
+        }
+    }
+
+    const handleDeleteClick = async (id) => {
+        MySwal.fire({
+            title: 'Are you sure?',
+            text: "You want to delete this post!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then(async (result) => {   // make this callback async
+            if (result.isConfirmed) {
+                try {
+                    const res = await axios.delete(`/tweet/delete/${id}`, { withCredentials: true });
+                    console.log(res);
+                    if (res.data.success) {
+                        toast.success(`Your post deleted successfully`);
+                        dispatch(refresh());
+                    }
+                } catch (error) {
+                    toast.error(error.response?.data?.message || "Something went wrong!");
+                    console.log(error);
+                }
+            }
+        });
+    };
+    
+
   return (
-    <div key={tweet?._id} className="tweet-card-container">
+    <div className="tweet-card-container">
         <div className="user-img">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s" alt="Profile-image" />
         </div>
@@ -20,7 +97,7 @@ const TweetCard = (tweet) => {
                     <span>{name}</span>
                     <RiVerifiedBadgeFill className='icon'/>
                     <span>@{userName}</span>
-                    <span>few minutes ago</span>
+                    <span>{timeAgo}</span>
                 </div>
                 <RiMoreFill className='icon' title='More'/>
             </div>
@@ -32,13 +109,19 @@ const TweetCard = (tweet) => {
                     <span>21</span>
                 </div>
                 <div className='action-sub'>
-                    <FaRegHeart className='icon'/>
+                    <FaRegHeart onClick={() => handleLikeClick(tweet?._id)} className='icon'/>
                     <span>{tweet?.like.length}</span>
                 </div>
                 <div className='action-sub'>
-                    <FaRegBookmark className="icon"/>
-                    <span>0</span>
+                    <FaRegBookmark size={'32px'} onClick={() => handleBookmarkClick(tweet?._id)} className="icon"/>
+                    {/* <span>0</span> */}
                 </div>
+                {
+                    user._id === _id && 
+                    <div className='action-sub'>
+                        <RiChatDeleteLine onClick={() => handleDeleteClick(tweet?._id)} className="icon"/>
+                    </div>
+                }
             </div>
         </div>
     </div>

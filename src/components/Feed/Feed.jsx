@@ -19,7 +19,7 @@ const Feed = () => {
     <div className="feed-container">
       <CreatePost/>
       {
-        tweets?.map(tweet => <TweetCard {...tweet}/>)
+        tweets?.map(tweet => <TweetCard key={tweet?._id} {...tweet}/>)
       }
      
     </div>
