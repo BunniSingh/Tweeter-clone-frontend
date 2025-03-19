@@ -34,7 +34,7 @@ const RightSidebar = () => {
       }
       // console.log(res.data);
     } catch (error) {
-      
+      console.log(error?.response?.data);
     }
   }
 
@@ -51,7 +51,9 @@ const RightSidebar = () => {
         <button>Subscribe</button>
       </div>
 
-      <div className="people-profiles">
+      {
+        otherUsers.length > 0 &&
+        <div className="people-profiles">
         <h3>Who to follow</h3>
         {
           otherUsers.map(user => {
@@ -63,7 +65,7 @@ const RightSidebar = () => {
             return (
               <div key={user._id} className="people-profile">
                 <div className='people-profile-sub'>
-                  <img src="https://cdn-icons-png.flaticon.com/512/10337/10337609.png" alt="people-profile-image" />
+                  <img src={user?.imageUrl} />
                   <div>
                     <Link to={`/profile/${user?._id}`}>
                       <div className='people-info'>
@@ -71,7 +73,7 @@ const RightSidebar = () => {
                         <MdVerified className='icon' />
                       </div>
                     </Link>
-                    <p>@{user.email.split('@')[0]}</p>
+                    <p>@{user.userName}</p>
                   </div>
                 </div>
                 <button onClick={() => handleFollowClick(user?._id)}>{isFollow}</button>
@@ -80,7 +82,7 @@ const RightSidebar = () => {
           })
         }
         <button className='btn'>Show more</button>
-      </div>
+      </div>}
 
       <div className="footer">
         <p>Terms of Service</p>

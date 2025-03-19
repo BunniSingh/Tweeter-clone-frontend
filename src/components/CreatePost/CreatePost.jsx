@@ -6,11 +6,12 @@ import { MdEmojiEmotions, MdLocationOn, MdOutlineGifBox } from "react-icons/md"
 import axios from 'axios';
 import Loader from '../Loader';
 import toast from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { refresh, setAllTweets } from '../../redux/slices/tweetSlice';
 
 
 const CreatePost = () => {
+    const {user} = useSelector(store => store.user);
     const [toggle, setToggle] = useState(false);
     const [loading, setLoading] = useState(false);
     const descriptionRef = useRef(null);
@@ -79,7 +80,7 @@ const CreatePost = () => {
 
             <div className="create-post-sub2">
                 <div className='sub2-img'>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s" alt="Profile-image" />
+                    <img src={user?.imageUrl} alt="Profile-image" />
                 </div>
                 <form onSubmit={onSubmitHandel} className='sub2-items'>
                     <input ref={descriptionRef} type="text" placeholder="What's happening?" required />

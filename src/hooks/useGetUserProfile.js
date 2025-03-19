@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../redux/slices/userSlice";
 
 const useGetUserProfile = (id) => {
@@ -25,7 +25,7 @@ const useGetUserProfile = (id) => {
         };
 
         fetchData();
-    }, [id, dispatch]); // `id` and `dispatch` are dependencies
+    }, [id, dispatch]);
 
     return { loading, error };
 };

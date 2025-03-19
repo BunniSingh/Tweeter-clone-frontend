@@ -1,4 +1,4 @@
-.login-page-container{
+.login-page-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +6,7 @@
     animation: fadeIn 1s;
 }
 
-.login-page-container .login-page{
+.login-page-container .login-page {
     display: flex;
     /* border: 1px solid gray; */
     border-radius: 10px;
@@ -16,28 +16,30 @@
     width: 100%;
 
 
-    .left{
+    .left {
         flex: 1;
-       img{
-        width: 100%;
-       }
+        display: flex;
+
+        img {
+            width: 100%;
+        }
     }
-    .right{
+
+    .right {
         flex: 1;
-        margin:  auto;
+        margin: auto;
 
         h1 {
-            font-size: clamp(24px, 5vw, 48px); 
-            font-weight: 800; 
+            font-size: clamp(24px, 5vw, 48px);
+            font-weight: 800;
             color: #1DA1F2;
-            text-align: center; 
-            margin-bottom: 10px; 
-            letter-spacing: 1px; 
-            text-transform: capitalize; 
-            position: relative; 
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: capitalize;
+            position: relative;
         }
-        
-        /* Adding an underline effect */
+
         h1::after {
             content: "";
             display: block;
@@ -48,19 +50,55 @@
             border-radius: 2px;
             transition: width 0.3s ease-in-out;
         }
-        
+
         h1:hover::after {
-            width: 95%; 
-        }
-        
-        
-        .page-name{
-            font-weight: bolder;
-            font-size: 22px;
-            margin-bottom: 5px;
+            width: 95%;
         }
 
-        form{
+        .image-upload-wrapper {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ccc;
+            transition: transform 0.3s;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+        .profile-image:active{
+            transform: scale(0.9);
+        }
+
+
+        .page-login {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .page-login, .page-signup {
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff4b2b, #ff416c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px rgba(255, 75, 43, 0.3);
+          }
+
+        
+
+        form {
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -68,50 +106,52 @@
             /* max-width: 300px;
             width: 100%; */
 
-            
-            .div{
+
+            .div {
                 display: flex;
                 gap: 5px;
-                input{
+
+                input {
                     width: 100%;
                 }
             }
-            input{
+
+            input {
                 width: 100%;
                 padding: 8px 5px;
                 font-size: 15px;
                 border-radius: 4px;
                 outline: none;
                 border: 1px solid gray;
-                transition: all 0.3s ease; 
+                transition: all 0.3s ease;
             }
 
             input:focus {
                 border-color: blue;
                 box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
-                background-color: #f0f8ff; 
+                background-color: #f0f8ff;
             }
 
             button {
                 background-color: #007bff;
-                color: white; 
-                padding: 12px 24px; 
+                color: white;
+                padding: 12px 24px;
                 font-size: 16px;
-                font-weight: 500; 
-                border: none; 
-                border-radius: 6px; 
-                cursor: pointer; 
-                transition: all 0.3s ease; 
+                font-weight: 500;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
             }
-            
+
             button:hover {
-                background-color: #0056b3; 
+                background-color: #0056b3;
             }
-            
+
             button:active {
-                transform: scale(0.95); 
+                transform: scale(0.95);
             }
-            
+
         }
 
         .switch-form {
@@ -120,27 +160,27 @@
             text-align: center;
             margin-top: 10px;
         }
-        
+
         .switch-form span {
-            color: #007bff; 
+            color: #007bff;
             font-weight: bold;
             cursor: pointer;
             transition: color 0.3s ease-in-out;
         }
-        
+
         .switch-form span:hover {
             color: #0056b3;
             text-decoration: underline;
         }
-        
+
 
 
         .google-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px; 
-            background-color: #db4437; 
+            gap: 10px;
+            background-color: #db4437;
             color: white;
             padding: 12px 20px;
             font-size: 16px;
@@ -152,22 +192,22 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .google-btn .icon {
             font-size: 20px;
         }
-        
+
         .google-btn:hover {
             background-color: #c1351d;
         }
-        
+
         .google-btn:active {
-            transform: scale(0.95); /
+            transform: scale(0.95);/
         }
-        
+
 
     }
-    
+
 }
 
 .divider {
@@ -175,7 +215,8 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    span{
+
+    span {
         color: rgb(149, 149, 149);
     }
 }
@@ -191,10 +232,11 @@
 
 
 @keyframes fadeIn {
-    0%{
+    0% {
         opacity: 0;
     }
-    100%{
+
+    100% {
         opacity: 1;
     }
 }
@@ -202,8 +244,10 @@
 @keyframes fadeInSlide {
     0% {
         opacity: 0;
-        transform: translateY(-10px); /* Slight slide effect */
+        transform: translateY(-10px);
+        /* Slight slide effect */
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -217,3 +261,7 @@ form {
     transition: all 0.3s ease-in-out;
 }
 
+
+
+  
+  

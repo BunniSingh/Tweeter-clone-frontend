@@ -2,8 +2,8 @@ import React from 'react'
 import './LeftSidebar.css'
 import { FaXTwitter } from "react-icons/fa6";
 import { CiUser, CiTwitter, CiCircleMore } from "react-icons/ci"
-import { IoMdHome, IoIosSearch, IoMdNotifications, IoIosMore, IoMdLogOut } from "react-icons/io";
-import { IoListCircleOutline } from "react-icons/io5"
+import { IoMdHome, IoIosSearch, IoMdNotifications, IoMdLogOut } from "react-icons/io";
+import { IoListCircleOutline, IoBookmark  } from "react-icons/io5"
 import { MdOutlineForwardToInbox } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import withReactContent from 'sweetalert2-react-content';
 import { setAllTweets } from '../../redux/slices/tweetSlice';
 import { getMyProfile, setOtherUser, setUserDetails } from '../../redux/slices/userSlice';
 import axios from 'axios';
+import useGetMyTweets from '../../hooks/useGetMyTweets';
 const MySwal = withReactContent(Swal);
 
 const LeftSidebar = () => {
@@ -20,7 +21,7 @@ const LeftSidebar = () => {
     const dispatch = useDispatch();
 
     const { user } = useSelector(store => store.user);
-    let email = user.email.split('@')[0];
+    let email = user?.email.split('@')[0];
     let name = `${user?.firstName} ${user?.lastName}`;
 
     const onLogoutClick = () => {
@@ -53,6 +54,32 @@ const LeftSidebar = () => {
         });
     }
 
+    const handleBookmarkClick = async () => {
+        try {
+            const res = await axios.get("tweet/getbookmarktweets", { withCredentials: true });
+            console.log(res);
+            if (res.data.success) {
+                dispatch(setAllTweets(res.data.result));
+            }
+            return;
+        } catch (error) {
+            console.log("Error:", error.response.message);
+        }
+    }
+
+    const handleHomeClick = async () => {
+        try {
+            const res = await axios.get("tweet/getalltweets", { withCredentials: true });
+            console.log(res);
+            if (res.data.success) {
+                dispatch(setAllTweets(res.data.result));
+            }
+            return;
+        } catch (error) {
+            console.log("Error:", error.response.message);
+        }
+    }
+
     return (
         <div className='left-sidebar-container'>
             <div className='sidebar-top'>
@@ -60,7 +87,7 @@ const LeftSidebar = () => {
             </div>
             <div className='left-sidebar'>
                 <div className='sidebar-middle'>
-                    <Link to={'/'} className='sub-body'>
+                    <Link onClick={handleHomeClick} to={'/'} className='sub-body'>
                         <IoMdHome className='icon' />
                         <span>Home</span>
                     </Link >
@@ -73,13 +100,13 @@ const LeftSidebar = () => {
                         <span>Notifications</span>
                     </div>
                     <div className='sub-body'>
-                        <MdOutlineForwardToInbox className='icon' />
+                        <MdOutlineForwardToInbox size={'20px'} className='icon' />
                         <span>Message</span>
                     </div>
-                    <div className='sub-body'>
-                        <IoListCircleOutline className='icon' />
-                        <span>Lists</span>
-                    </div>
+                    <Link onClick={handleBookmarkClick} className='sub-body'>
+                        <IoBookmark size={'20px'} className='icon' />
+                        <span>Bookmark</span>
+                    </Link>
                     <div className='sub-body'>
                         <CiTwitter className='icon' />
                         <span>Premium</span>
@@ -102,7 +129,7 @@ const LeftSidebar = () => {
 
                 </div>
                 <div className='sidebar-bottom'>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2TgOv9CMmsUzYKCcLGWPvqcpUk6HXp2mnww&s" alt="Profile-image" />
+                    <img src={user?.imageUrl} alt="Profile-image" />
                     <div className='buttom-sub'>
                         <p>{name.length > 12 ? `${name.slice(0, 8)}...` : name}</p>
                         <p>@{email.length > 8 ? `${email.slice(0, 8)}...` : email}</p>

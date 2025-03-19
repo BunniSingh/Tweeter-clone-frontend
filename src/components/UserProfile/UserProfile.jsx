@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./UserProfile.css";
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import Loader from '../Loader';
 //Day.js imports
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { updateFollowandUnfollow } from '../../redux/slices/userSlice';
+import { updateFollowandUnfollow, updateProfileFollowers } from '../../redux/slices/userSlice';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 dayjs.extend(relativeTime);
@@ -17,9 +17,7 @@ dayjs.extend(relativeTime);
 
 
 const UserProfile = () => {
-
     const dispatch = useDispatch();
-
     const { user, profile } = useSelector(store => store.user);
     const { id } = useParams();
     const { loading, error } = useGetUserProfile(id);
@@ -28,13 +26,13 @@ const UserProfile = () => {
     if (loading) return <Loader />;
     if (error) return <p>Error: {error.message}</p>;
 
-
     const handleFollowClick = async (id) => {
         try {
             const res = await axios.put(`/user/follow/${id}`, {}, { withCredentials: true });
             if (res.data.success) {
                 toast.success(res.data.message);
                 dispatch(updateFollowandUnfollow(id));
+                dispatch(updateProfileFollowers(id));
             }
             // console.log(res.data);
         } catch (error) {
@@ -65,7 +63,7 @@ const UserProfile = () => {
                 <div className="middle-second">
                     <div className="mid-sub1">
                         <div className="profile-img">
-                            <img src="https://png.pngtree.com/png-clipart/20231019/original/pngtree-user-profile-avatar-png-image_13369988.png" alt="profile-image" />
+                            <img src={profile?.imageUrl}/>
                         </div>
                         {
                             user._id === id ? <button onClick={onEditProfile}>Edit profile</button>
@@ -92,11 +90,11 @@ const UserProfile = () => {
                     </div>
                     <div className="mid-sub4">
                         <div>
-                            <span>16</span>
+                            <span>{profile?.following.length}</span>
                             <span>Following</span>
                         </div>
                         <div>
-                            <span>1k</span>
+                            <span>{profile?.followers.length}</span>
                             <span>Followers</span>
                         </div>
                     </div>

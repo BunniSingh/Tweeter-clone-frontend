@@ -7,10 +7,8 @@ import Loader from '../Loader'
 import { useSelector } from 'react-redux'
 
 const Feed = () => {
-
   const { loading, error } = useGetMyTweets();
   const {tweets} = useSelector(store => store.tweet);
-  console.log(tweets)
 
   if(loading) <Loader/>;
   if (error) return <p>Error: {error.message}</p>;

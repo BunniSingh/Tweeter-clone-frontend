@@ -51,6 +51,7 @@
             align-items: center;
 
             .profile-img{
+                display: flex;
                 width: 110px;
                 background-color: pink;
                 border-radius: 50%;
@@ -58,6 +59,7 @@
                 transform: translate(20px, -60px);
                 img{
                     width: 100%;
+                    border-radius: 50%;
                 }
             }
 
