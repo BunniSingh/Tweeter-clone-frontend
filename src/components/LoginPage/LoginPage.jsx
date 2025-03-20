@@ -86,12 +86,14 @@ const LoginPage = () => {
                 let email = emailRef.current.value.trim();
                 let password = passwordRef.current.value.trim();
                 const obj = { email, password }
+
                 let responce = await axios.post('/user/login', obj, {
                     headers: {
                         "Content-Type": "application/json"
                     },
                     withCredentials: true,
                 });
+                
                 if (responce.data.success) {
                     toast.success(responce.data.message);
                     dispatch(setUserDetails(responce.data.user));
