@@ -13,7 +13,7 @@ import persistStore from 'redux-persist/es/persistStore';
 
 let persistor = persistStore(store)
 
-axios.defaults.baseURL = "https://tweeter-clone-backand.onrender.com";
+axios.defaults.baseURL = "https://tweeter-clone-backand.onrender.com/api/v1";
 // axios.defaults.baseURL = "http://localhost:8080/api/v1";
 
 const router = createBrowserRouter([
