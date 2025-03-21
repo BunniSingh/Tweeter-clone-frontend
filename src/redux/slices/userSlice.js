@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { refresh } from "./tweetSlice";
 
 const userSlice = createSlice({
   name: "USER",
@@ -7,9 +6,13 @@ const userSlice = createSlice({
     user: null,
     otherUsers: null,
     profile: null,
-    refresh: false,
+    imagePreview: null,
   },
   reducers: {
+    setImagePreview(state, action) {
+      state.imagePreview = action.payload;
+    },
+    
     setUserDetails(state, action) {
       state.user = action.payload;
     },
@@ -65,6 +68,7 @@ export const {
   updateFollowandUnfollow,
   updateProfileFollowers,
   updateBookmarkandRemoveBookmark,
+  setImagePreview,
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -93,7 +93,7 @@ const LoginPage = () => {
                     },
                     withCredentials: true,
                 });
-                
+
                 if (responce.data.success) {
                     toast.success(responce.data.message);
                     dispatch(setUserDetails(responce.data.user));
@@ -107,6 +107,10 @@ const LoginPage = () => {
                 setLoading(false);
             }
         }
+    }
+
+    const handleGoogleSignInClick = () =>{
+        toast.error("Sorry, Now google singIn not works Please login manuelly")
     }
     return (
         <div className='login-page-container'>
@@ -142,7 +146,7 @@ const LoginPage = () => {
                             <input ref={userNameRef} type="text" placeholder='Username' required />
                         </>}
                         <input ref={emailRef} type="email" placeholder='Email' autoComplete='username' required />
-                        <input ref={passwordRef} type="password" placeholder='Password' autoComplete={toogle ? "current-password" : "new-password"} required />
+                        <input ref={passwordRef} type="password" placeholder='Password' required/>
                         <button type="submit">{toogle ? "Register" : "Login"}</button>
                     </form>
                     <p className='switch-form'>
@@ -156,7 +160,7 @@ const LoginPage = () => {
                         <span>OR</span>
                     </div>
 
-                    <button className='google-btn'>
+                    <button onClick={handleGoogleSignInClick} className='google-btn'>
                         <FaGoogle className='icon' />
                         Login with google
                     </button>

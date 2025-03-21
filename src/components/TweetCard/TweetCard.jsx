@@ -18,7 +18,7 @@ dayjs.extend(relativeTime);
 
 //icons imports
 import { RiChatDeleteLine, RiMoreFill, RiVerifiedBadgeFill } from "react-icons/ri";
-import { FaRegComment, FaRegBookmark, FaRegHeart, FaBookmark } from "react-icons/fa";
+import { FaRegComment, FaRegBookmark, FaRegHeart, FaBookmark, FaHeart } from "react-icons/fa";
 import { updateBookmarkandRemoveBookmark } from '../../redux/slices/userSlice';
 
 const TweetCard = (tweet) => {
@@ -34,7 +34,6 @@ const TweetCard = (tweet) => {
     const handleLikeClick = async (id) => {
         try {
             const res = await axios.put(`/tweet/like/${id}`, {}, { withCredentials: true });
-            console.log(res)
             if (res.data.success) {
                 toast.success(`You ${res.data.message.split(" ")[1]} the ${firstName}'s post`);
                 dispatch(refresh());
@@ -102,14 +101,19 @@ const TweetCard = (tweet) => {
                     <RiMoreFill className='icon' title='More' />
                 </div>
                 <p className='post-para'>{tweet.description}</p>
-                <img className="post-img" src="https://randomwordgenerator.com/img/picture-generator/g423f6094b603ed0b039339db9baa3b25f5adb631f0cd4415c13c8ff43afec8bc3ae1846b399b07508f6df51821a7e022_640.jpg" alt="post-img" />
+                {tweet?.postImageUrl != "NA" && <img className="post-img" src={tweet?.postImageUrl} alt="post-img" />}
                 <div className="actions">
                     <div className='action-sub'>
                         <FaRegComment className='icon' />
                         <span>21</span>
                     </div>
                     <div className='action-sub'>
-                        <FaRegHeart onClick={() => handleLikeClick(tweet?._id)} className='icon' />
+                        {
+                            tweet?.like.includes(user?._id) ? 
+                                <FaHeart onClick={() => handleLikeClick(tweet?._id)} className='icon' />
+                                :
+                                <FaRegHeart onClick={() => handleLikeClick(tweet?._id)} className='icon' />
+                        }
                         <span>{tweet?.like.length}</span>
                     </div>
                     <div className='action-sub' title='Bookmark this post'>

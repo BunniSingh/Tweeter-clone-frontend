@@ -2,33 +2,50 @@ import React, { useRef, useState } from 'react'
 import './CreatePost.css'
 
 import { CiImageOn } from "react-icons/ci";
-import { MdEmojiEmotions, MdLocationOn, MdOutlineGifBox } from "react-icons/md"
+import { MdClose, MdEmojiEmotions, MdLocationOn, MdOutlineGifBox } from "react-icons/md"
 import axios from 'axios';
 import Loader from '../Loader';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { refresh, setAllTweets } from '../../redux/slices/tweetSlice';
-
+import { setImagePreview } from '../../redux/slices/userSlice';
 
 const CreatePost = () => {
-    const {user} = useSelector(store => store.user);
+    const { user, imagePreview } = useSelector(store => store.user);
+
     const [toggle, setToggle] = useState(false);
     const [loading, setLoading] = useState(false);
+    const imageRef = useRef("");
     const descriptionRef = useRef(null);
 
     const dispatch = useDispatch();
 
     if (loading) return <Loader />;
 
+
+    const handleImageChage = (e) => {
+        let file = e.target.files[0];
+        if (file) {
+            const previewURL = URL.createObjectURL(file);
+            dispatch(setImagePreview(previewURL));
+        }
+    }
+
+
     const onSubmitHandel = async (e) => {
         e.preventDefault();
         try {
             setLoading(true)
+            const file = imageRef.current.files[0];
             const description = descriptionRef.current.value.trim();
-            const res = await axios.post("/tweet/create", { description }, { withCredentials: true });
+            const formData = new FormData();
+            formData.append('postImageUrl' , file);
+            formData.append('description' , description);
+            const res = await axios.post("/tweet/create", formData , { withCredentials: true });
             if (res.data.success) {
                 toast.success(res.data.message);
                 dispatch(refresh());
+                dispatch(setImagePreview(null));
             }
         } catch (error) {
             console.log(error.response.data);
@@ -37,7 +54,7 @@ const CreatePost = () => {
         }
     }
 
-    const forYouClick = async() => {
+    const forYouClick = async () => {
         try {
             setLoading(true)
             const res = await axios.get("/tweet/getalltweets", { withCredentials: true });
@@ -52,7 +69,7 @@ const CreatePost = () => {
         }
     }
 
-    const follingClick = async() => {
+    const follingClick = async () => {
         try {
             setLoading(true)
             const res = await axios.get("/tweet/getfollowingtweets", { withCredentials: true });
@@ -86,13 +103,30 @@ const CreatePost = () => {
                     <input ref={descriptionRef} type="text" placeholder="What's happening?" required />
                     <div className="sub2-icons">
                         <div className="icons">
-                            <CiImageOn className='icon' title='Media' />
+                            <div className='image-input'>
+                                <label htmlFor="image">
+                                    <CiImageOn className='icon' title='Media' />
+                                </label>
+                                <input
+                                    ref={imageRef}
+                                    type='file'
+                                    id='image'
+                                    style={{ display: "none" }}
+                                    onChange={handleImageChage}
+                                />
+                            </div>
                             <MdOutlineGifBox className='icon' title='GIF' />
                             <MdEmojiEmotions className='icon' title='Emojis' />
                             <MdLocationOn className='icon' title='Location' />
                         </div>
                         <button type='submit'>Post</button>
                     </div>
+                    {imagePreview &&
+                        <div className='preview-imge'>
+                            <img src={imagePreview} alt="image" />
+                            <MdClose onClick={() => dispatch(setImagePreview(null))} className="icon"/>
+                        </div>
+                    }
                 </form>
             </div>
 

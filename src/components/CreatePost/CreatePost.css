@@ -90,6 +90,11 @@
                 align-items: center;
                 gap: 5px;
 
+                .image-input label{
+                    display: flex;
+                    align-items: center;
+                }
+
                 .icon{
                     font-size: 25px;
                     color: #3cb0df;
@@ -122,6 +127,31 @@
                 &:active {
                     background-color: rgb(59, 176, 231); 
                     transform: scale(0.95);
+                }
+            }
+        }
+
+        .preview-imge{
+            width: 100%;
+            height: 300px;
+            position: relative;
+
+            img{
+                width: 100%;
+                height: 100%;
+                border-radius: unset;
+            }
+
+            .icon{
+                position: absolute;
+                color: #fff;
+                top: 10px;
+                right: 12px;
+                cursor: pointer;
+                font-size: 25px;
+                transition: 0.3s;
+                &:hover{
+                    color: red;
                 }
             }
         }
