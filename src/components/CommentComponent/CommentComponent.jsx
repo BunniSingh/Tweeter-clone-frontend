@@ -136,7 +136,7 @@ const CommentComponent = (props) => {
           placeholder="Type your commnt here!"
         />
         <div className='btn'>
-          <button type='submit'>Submit</button>
+          <button type='submit'>{commentId ? "Edit" : "Submit"}</button>
           <button onClick={() => setIsCommentVisible(false)}>Cancel</button>
         </div>
       </form>
