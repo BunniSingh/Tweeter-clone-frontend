@@ -20,14 +20,17 @@ dayjs.extend(relativeTime);
 import { RiChatDeleteLine, RiMoreFill, RiVerifiedBadgeFill } from "react-icons/ri";
 import { FaRegComment, FaRegBookmark, FaRegHeart, FaBookmark, FaHeart } from "react-icons/fa";
 import { updateBookmarkandRemoveBookmark } from '../../redux/slices/userSlice';
+import { Link } from 'react-router-dom';
+import CommentComponent from '../CommentComponent/CommentComponent';
 
 const TweetCard = (tweet) => {
     const [render, setRender] = useState(false)
+    const [isCommentVisible, setIsCommentVisible] = useState(false)
     const timeAgo = dayjs(tweet.updatedAt).fromNow();
     const { user } = useSelector(store => store?.user);
     const dispatch = useDispatch();
 
-    const { _id, firstName, lastName, imageUrl, email, userName } = tweet?.userId ?? {};
+    const { _id, firstName, lastName, imageUrl, userName } = tweet?.userId ?? {};
     console.log(imageUrl)
     let name = `${firstName} ${lastName}`;
 
@@ -84,16 +87,23 @@ const TweetCard = (tweet) => {
         });
     };
 
+    const handleCommentClick = () =>{
+        setIsCommentVisible(!isCommentVisible);
+    }
 
     return (
         <div className="tweet-card-container">
-            <div className="user-img">
-                <img src={imageUrl} alt="Profile-image" />
-            </div>
+            <Link to={`/profile/${_id}`}>
+                <div className="user-img">
+                    <img src={imageUrl} alt="Profile-image" />
+                </div>
+            </Link>
             <div className="card-details">
                 <div className="card-sub1">
                     <div>
-                        <span>{name}</span>
+                        <Link to={`/profile/${_id}`}>
+                            <span>{name}</span>
+                        </Link>
                         <RiVerifiedBadgeFill className='icon' />
                         <span>@{userName}</span>
                         <span>{timeAgo}</span>
@@ -101,15 +111,19 @@ const TweetCard = (tweet) => {
                     <RiMoreFill className='icon' title='More' />
                 </div>
                 <p className='post-para'>{tweet.description}</p>
-                {tweet?.postImageUrl != "NA" && <img className="post-img" src={tweet?.postImageUrl} alt="post-img" />}
+                {tweet?.postImageUrl != "NA" && 
+                    <div className="post-img">
+                        <a href={tweet?.postImageUrl} target='_blank'><img src={tweet?.postImageUrl} alt="post-img" /></a>
+                    </div>
+                }
                 <div className="actions">
                     <div className='action-sub'>
-                        <FaRegComment className='icon' />
-                        <span>21</span>
+                        <FaRegComment onClick={handleCommentClick} className='icon' />
+                        <span>{tweet?.comments.length}</span>
                     </div>
                     <div className='action-sub'>
                         {
-                            tweet?.like.includes(user?._id) ? 
+                            tweet?.like.includes(user?._id) ?
                                 <FaHeart onClick={() => handleLikeClick(tweet?._id)} className='icon' />
                                 :
                                 <FaRegHeart onClick={() => handleLikeClick(tweet?._id)} className='icon' />
@@ -131,6 +145,13 @@ const TweetCard = (tweet) => {
                         </div>
                     }
                 </div>
+                {isCommentVisible &&
+                    <CommentComponent
+                        {...tweet}
+                        setIsCommentVisible={setIsCommentVisible}
+
+                    />
+                }
             </div>
         </div>
     )

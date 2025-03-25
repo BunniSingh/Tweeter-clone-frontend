@@ -159,3 +159,10 @@
         opacity: 1;
     }
 }
+
+@media (max-width: 1000px) {
+    .user-profile-container{
+        min-width: 300px;
+        width: 100%;
+    }
+}

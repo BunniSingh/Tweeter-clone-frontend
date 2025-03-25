@@ -16,10 +16,12 @@ import { refresh } from '../../redux/slices/tweetSlice';
 const RightSidebar = () => {
 
   const dispatch = useDispatch();
-
   const {loading, error} = useGetOtherUsers();
   const {following} = useSelector(store => store.user.user);
   const {otherUsers} = useSelector(store => store.user);
+
+  const [showUser , setShowUser] = useState(otherUsers.slice(0, 3));
+  const [isShowAll , setShowAll] = useState(false);
 
   if(loading) return <Loader/>;
   if(error) return <p>Error: {error.message}</p>;
@@ -38,6 +40,16 @@ const RightSidebar = () => {
     }
   }
 
+  const onShowMoreClick = () => {
+    if(isShowAll){
+      setShowUser(otherUsers.slice(0, 3))
+      setShowAll(false);
+    }else{
+      setShowUser(otherUsers)
+      setShowAll(true);
+    }
+  }
+
   return (
     <div className='right-sidebar-container'>
       <div className="search-box">
@@ -53,10 +65,10 @@ const RightSidebar = () => {
 
       {
         otherUsers.length > 0 &&
-        <div className="people-profiles">
+        <div className={`people-profiles ${isShowAll ? 'expand' : ''}`}>
         <h3>Who to follow</h3>
         {
-          otherUsers.map(user => {
+          showUser.map(user => {
             let name = user.firstName + " " + user.lastName;
             if (name.length > 8) {
               name = user.firstName + "..."
@@ -81,7 +93,7 @@ const RightSidebar = () => {
             )
           })
         }
-        <button className='btn'>Show more</button>
+        <button onClick={onShowMoreClick} className='btn'>{isShowAll ? "Show less" : "Show more"}</button>
       </div>}
 
       <div className="footer">

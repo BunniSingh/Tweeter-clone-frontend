@@ -8,3 +8,10 @@
     flex-direction: column */
   }
   
+
+  @media (max-width: 1000px) {
+    .feed-container{
+      min-width: 300px;
+        width: 90%;
+    }
+}

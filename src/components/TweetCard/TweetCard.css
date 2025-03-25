@@ -1,4 +1,4 @@
-.tweet-card-container{
+.tweet-card-container {
     padding: 10px;
     padding-right: 15px;
     display: flex;
@@ -11,83 +11,97 @@
 
 .tweet-card-container .user-img {
     flex: 0.1;
-    img{
+
+    img {
         width: 40px;
-    height: 40px ;
-    border-radius: 50%;
+        height: 40px;
+        border-radius: 50%;
     }
-    
+
 }
 
-.tweet-card-container .card-details{
-    flex: 0.9;
+.tweet-card-container .card-details {
+    flex: 1;
 
-    .card-sub1{
+    .card-sub1 {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        div{
+        div {
             display: flex;
             align-items: center;
             gap: 2px;
 
-            .icon{
+            .icon {
                 color: #3dc3fb;
             }
 
-            span:nth-child(1){
+            span:nth-child(1) {
                 font-weight: bold;
             }
-            span:nth-child(4), span:nth-child(3){
+
+            span:nth-child(4),
+            span:nth-child(3) {
                 margin-left: 5px;
                 color: rgba(0, 0, 0, 0.679);
             }
 
         }
 
-        
+
     }
-    .post-para{
+
+    .post-para {
         font-family: 'Arial', sans-serif;
         font-size: 16px;
         line-height: 1.4;
         color: #333;
-        /* text-align: justify; */
-        /* margin-bottom: 16px; */
         padding: 5px 0;
     }
 
-    .post-img{
+    .post-img {
         width: 100%;
-        margin-top: 10px;
+        max-height: 400px; /* Maximum height */
+        overflow: hidden;  /* Prevents image overflow if it's larger than container */
     }
+    
+    .post-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
+        object-position: center; /* Centers the image */
+    }
+    
+    
 
-    .actions{
+    .actions {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 5px 10px;
         margin: 10px 0;
 
-        .action-sub{
+        .action-sub {
             display: flex;
             align-items: center;
             gap: 8px;
             transition: 0.3s;
             padding: 5px;
             border-radius: 10px;
-            
-            .icon{
+
+            .icon {
                 font-size: 34px;
                 padding: 4px;
                 border-radius: 6px;
                 cursor: pointer;
                 transition: all 0.3s;
-                &:hover{
+
+                &:hover {
                     background-color: rgba(127, 213, 101, 0.267);
                 }
-                &:active{
+
+                &:active {
                     transform: scale(.95);
                 }
             }
@@ -97,10 +111,17 @@
 
 
 @keyframes fadeIn {
-    0%{
+    0% {
         opacity: 0;
     }
-    100%{
+
+    100% {
         opacity: 1;
+    }
+}
+
+
+@media (max-width: 1000px) {
+    .tweet-card-container{
     }
 }

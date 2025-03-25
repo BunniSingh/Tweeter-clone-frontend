@@ -1,0 +1,111 @@
+.comment-component-container {
+    background-color: #17577221;
+    padding: 10px;
+    border-radius: 5px;
+    animation: fadeInSlide 1s ease;
+}
+
+.comment-component-container .author {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-bottom: 10px;
+
+    img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}
+
+.comment-component-container .comment-actions {
+    margin-bottom: 20px;
+    input {
+        padding: 10px 6px;
+        border-radius: 5px;
+        border: 1px solid gray;
+        font-size: 15px;
+
+        &:focus{
+            outline-color: rgb(41, 128, 0);
+        }
+    }
+
+
+    .btn{
+        display: flex;
+        gap: 10px;
+
+
+        button {
+            padding: 4px 12px;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            background-color: #55a0c0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+            
+            &:active {
+                background-color: rgb(59, 176, 231); 
+                transform: scale(0.95);
+            }
+        }
+
+        & button:nth-child(1):hover{
+            background-color: #175772;
+        }
+        & button:nth-child(2):hover{
+            background-color: red;
+        }
+    }
+}
+
+.comment-component-container .comments{
+
+    .comment{
+        display: flex;
+        gap: 10px;
+        margin: 10px 0;
+
+        p{
+            font-size: 14px;
+        }
+    }
+
+    .commented-person-image{
+
+        img{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+    }
+    .commented-person-detail{
+
+        div{
+            display: flex;
+            gap:10px;
+            margin-bottom: 5px;
+
+            span{
+                color: gray;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+@keyframes fadeInSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+        /* Slight slide effect */
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -73,3 +73,27 @@
         font-size: 14px;
     }
 }
+
+@media (max-width: 1000px){
+    .left-sidebar-container{
+        width: unset;
+        justify-content: center;
+    }
+    .sidebar-middle .sub-body span{
+        display: none;
+    }
+    .sidebar-middle button{
+        display: none;
+    }
+
+    .left-sidebar-container .sidebar-bottom .buttom-sub{
+        display: none;
+    }
+    .left-sidebar-container .sidebar-bottom {
+        justify-content: center;
+    }
+
+    .left-sidebar{
+        margin-right: 10px;
+    }
+}
