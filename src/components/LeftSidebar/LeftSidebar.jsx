@@ -95,22 +95,22 @@ const LeftSidebar = () => {
                         <IoIosSearch className='icon' />
                         <span>Search</span>
                     </div>
-                    <div className='sub-body'>
+                    {/* <div className='sub-body'>
                         <IoMdNotifications className='icon' />
                         <span>Notifications</span>
-                    </div>
-                    <div className='sub-body'>
+                    </div> */}
+                    {/* <div className='sub-body'>
                         <MdOutlineForwardToInbox size={'20px'} className='icon' />
                         <span>Message</span>
-                    </div>
+                    </div> */}
                     <Link onClick={handleBookmarkClick} className='sub-body'>
                         <IoBookmark size={'20px'} className='icon' />
                         <span>Bookmark</span>
                     </Link>
-                    <div className='sub-body'>
+                    {/* <div className='sub-body'>
                         <CiTwitter className='icon' />
                         <span>Premium</span>
-                    </div>
+                    </div> */}
                     <Link to={`/profile/${user?._id}`} className='sub-body'>
                         <CiUser className='icon' />
                         <span>Profile</span>

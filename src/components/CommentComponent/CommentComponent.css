@@ -1,5 +1,5 @@
 .comment-component-container {
-    background-color: #17577221;
+    background-color: #4ca7ce21;
     padding: 10px;
     border-radius: 5px;
     animation: fadeInSlide 1s ease;
@@ -68,9 +68,39 @@
         display: flex;
         gap: 10px;
         margin: 10px 0;
+        border-bottom:  1px solid rgba(135, 207, 235, 0.61);
+        padding-bottom: 10px;
 
         p{
             font-size: 14px;
+        }
+
+        .action-btn{
+            padding: 5px 0;
+            display: flex;
+            gap: 15px;
+            .icon{
+                font-size: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+                &:nth-child(1){
+                    color: green;
+
+                    &:hover{
+                        color: rgb(46, 207, 46);
+                    }
+                }
+                &:nth-child(2){
+                    color: rgb(165, 48, 91);
+
+                    &:hover{
+                        color: red;
+                    }
+                }
+
+            }
+
+
         }
     }
 
@@ -87,7 +117,7 @@
         div{
             display: flex;
             gap:10px;
-            margin-bottom: 5px;
+            /* margin-bottom: 5px; */
 
             span{
                 color: gray;
@@ -95,6 +125,8 @@
             }
         }
     }
+
+    
 }
 
 @keyframes fadeInSlide {

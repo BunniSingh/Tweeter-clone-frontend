@@ -20,7 +20,7 @@ const RightSidebar = () => {
   const {following} = useSelector(store => store.user.user);
   const {otherUsers} = useSelector(store => store.user);
 
-  const [showUser , setShowUser] = useState(otherUsers.slice(0, 3));
+  const [showUser , setShowUser] = useState(otherUsers?.slice(0, 3));
   const [isShowAll , setShowAll] = useState(false);
 
   if(loading) return <Loader/>;
@@ -42,7 +42,7 @@ const RightSidebar = () => {
 
   const onShowMoreClick = () => {
     if(isShowAll){
-      setShowUser(otherUsers.slice(0, 3))
+      setShowUser(otherUsers?.slice(0, 3))
       setShowAll(false);
     }else{
       setShowUser(otherUsers)

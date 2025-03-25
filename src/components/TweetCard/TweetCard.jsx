@@ -149,7 +149,6 @@ const TweetCard = (tweet) => {
                     <CommentComponent
                         {...tweet}
                         setIsCommentVisible={setIsCommentVisible}
-
                     />
                 }
             </div>
