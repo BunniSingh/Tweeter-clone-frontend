@@ -4,6 +4,8 @@ import { refresh } from '../../redux/slices/tweetSlice';
 import "./CommentComponent.css"
 import axios from 'axios';
 
+import InputEmoji from 'react-input-emoji';
+
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
@@ -23,7 +25,8 @@ const CommentComponent = (props) => {
   const [showComments, setShowComments] = useState([]);
   // const [isEditMode, setIsEditMode] = useState(false);
   const [commentId, setCommentId] = useState("");
-  const commetRef = useRef(null)
+  const [commentText, setCommentText] = useState("");
+  // const commetRef = useRef(null)
   const dispatch = useDispatch();
   const { _id, setIsCommentVisible } = props;
 
@@ -45,26 +48,30 @@ const CommentComponent = (props) => {
   const handleSubmitClick = async (event) => {
     event.preventDefault();
     try {
+      let comment = commentText.trim();
+      if(!comment) return;
       if (commentId) {
-        let comment = commetRef.current.value.trim();
+        // let comment = commetRef.current.value.trim();
         const res = await axios.patch('tweet/edit/comment', { commentId, comment, tweetId: _id });
         if (res.data.success) {
           fatchComments();
           dispatch(refresh());
           toast.success("Your comment is updated successfully")
-          commetRef.current.value = "";
+          // commetRef.current.value = "";
+          // setCommentText("")
           setCommentId("");
         }
       } else {
-        let comment = commetRef.current.value.trim();
+        // let comment = commetRef.current.value.trim();
         const res = await axios.post('tweet/create/comment', { comment, tweetId: _id });
         if (res.data.success) {
           fatchComments();
           dispatch(refresh());
           toast.success("Your comment was submitted successfully")
-          commetRef.current.value = "";
+          // commetRef.current.value = "";
         }
       }
+      setCommentText("")
     } catch (error) {
       toast.error(error.response?.data?.message || "Somthing went rong");
       console.log(error)
@@ -75,7 +82,8 @@ const CommentComponent = (props) => {
   const handleEditClick = async (id) => {
     let idx = showComments.findIndex(comment => comment._id === id);
     console.log('Edit mode click:', idx)
-    commetRef.current.value = showComments[idx].comment;
+    // commetRef.current.value = showComments[idx].comment;
+    setCommentText(showComments[idx].comment)
     setCommentId(id);
   }
 
@@ -118,10 +126,15 @@ const CommentComponent = (props) => {
     <div className='comment-component-container'>
       <div className="author">
         <img width='30px' src={user?.imageUrl} alt="user-profile-image" />
-        <strong>Banti Singh</strong>
+        <strong>{`${user?.firstName} ${user?.lastName}`}</strong>
       </div>
       <form onSubmit={handleSubmitClick} className="comment-actions">
-        <input ref={commetRef} type="text" required placeholder='Type your commnt here!' />
+        {/* <input ref={commetRef} type="text" required placeholder='Type your commnt here!' /> */}
+        <InputEmoji
+          value={commentText}
+          onChange={setCommentText}
+          placeholder="Type your commnt here!"
+        />
         <div className='btn'>
           <button type='submit'>Submit</button>
           <button onClick={() => setIsCommentVisible(false)}>Cancel</button>

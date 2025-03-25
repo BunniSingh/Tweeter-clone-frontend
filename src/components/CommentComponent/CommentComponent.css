@@ -20,6 +20,7 @@
 
 .comment-component-container .comment-actions {
     margin-bottom: 20px;
+    gap: 5px;
     input {
         padding: 10px 6px;
         border-radius: 5px;
@@ -35,7 +36,7 @@
     .btn{
         display: flex;
         gap: 10px;
-
+        margin-left: 10px;
 
         button {
             padding: 4px 12px;
@@ -63,7 +64,7 @@
 }
 
 .comment-component-container .comments{
-
+    
     .comment{
         display: flex;
         gap: 10px;

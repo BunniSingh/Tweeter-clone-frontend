@@ -68,7 +68,7 @@ const RightSidebar = () => {
         <div className={`people-profiles ${isShowAll ? 'expand' : ''}`}>
         <h3>Who to follow</h3>
         {
-          showUser.map(user => {
+          showUser?.map(user => {
             let name = user.firstName + " " + user.lastName;
             if (name.length > 8) {
               name = user.firstName + "..."
